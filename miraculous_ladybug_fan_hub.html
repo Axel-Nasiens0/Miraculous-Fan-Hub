@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miraculous Ladybug & Cat Noir - Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ladybug: {
+                            red: '#e60026',
+                            darkRed: '#a8001a',
+                            black: '#121212',
+                        },
+                        catnoir: {
+                            green: '#39ff14',
+                            darkGreen: '#1b8006',
+                            black: '#18181b',
+                        },
+                        kwami: {
+                            gold: '#ffd700',
+                            purple: '#8a2be2',
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        /* Ladybug Polka Dot Pattern */
+        .polka-dot-bg {
+            background-color: #dc2626;
+            background-image: radial-gradient(#121212 22%, transparent 23%);
+            background-size: 35px 35px;
+            background-position: 0 0, 17.5px 17.5px;
+        }
+
+        /* Cat Noir Leather Hexagon Pattern */
+        .cat-noir-bg {
+            background-color: #111827;
+            background-image: radial-gradient(#22c55e 10%, transparent 11%), radial-gradient(#15803d 10%, transparent 11%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+
+        /* Glowing Effects */
+        .glow-red {
+            box-shadow: 0 0 25px rgba(230, 0, 38, 0.6);
+        }
+
+        .glow-green {
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.6);
+        }
+
+        /* Custom Pulse Animation */
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(230, 0, 38, 0.8)); }
+            50% { filter: drop-shadow(0 0 20px rgba(230, 0, 38, 1)); }
+        }
+
+        .animate-pulse-glow {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e60026;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39ff14;
+        }
+
+        /* Lucky Charm Burst Visual Effect */
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .fx-burst {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: burst 0.8s ease-out forwards;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col transition-colors duration-500" id="appBody">
+
+    <!-- FX Overlay Container for Magic Effects -->
+    <div id="fxContainer" class="pointer-events-none fixed inset-0 z-50"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="triggerEffect('ladybug')">
+                    <div class="w-10 h-10 rounded-full polka-dot-bg border-2 border-white flex items-center justify-center shadow-lg transform hover:rotate-180 transition-transform duration-500">
+                        <div class="w-3 h-3 bg-slate-900 rounded-full"></div>
+                    </div>
+                    <span class="font-fredoka text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-400 to-green-400">
+                        MIRACULOUS HUB
+                    </span>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex space-x-6 font-fredoka text-lg">
+                    <a href="#characters" class="hover:text-red-400 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-mask"></i> Personajes
+                    </a>
+                    <a href="#kwamis" class="hover:text-yellow-400 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Kwamis
+                    </a>
+                    <a href="#episodes" class="hover:text-purple-400 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-bug"></i> Alerta Akuma
+                    </a>
+                    <a href="#quiz" class="hover:text-green-400 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-gamepad"></i> Trivia
+                    </a>
+                </div>
+
+                <!-- Theme Switcher Toggle -->
+                <div class="flex items-center gap-3">
+                    <button id="themeToggleBtn" onclick="toggleTheme()" class="px-4 py-2 rounded-full font-fredoka text-sm font-semibold flex items-center gap-2 bg-gradient-to-r from-red-600 to-black text-white hover:scale-105 transition-all shadow-md">
+                        <span id="themeBtnText"><i class="fa-solid fa-shield-cat"></i> Modo Cat Noir</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header Section -->
+    <header id="heroHeader" class="relative min-h-[85vh] flex items-center justify-center polka-dot-bg overflow-hidden transition-all duration-700">
+        <!-- Dark Overlay for contrast -->
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/60 to-slate-950"></div>
+        
+        <!-- Animated Background Icons -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none flex justify-around items-center">
+            <i class="fa-solid fa-paw text-9xl animate-bounce"></i>
+            <i class="fa-solid fa-shield-heart text-9xl animate-pulse"></i>
+            <i class="fa-solid fa-mask text-9xl animate-bounce"></i>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center px-4 py-12">
+            <div class="inline-block mb-4 px-4 py-1.5 bg-red-600/30 border border-red-500/50 rounded-full text-red-300 font-semibold text-sm uppercase tracking-widest backdrop-blur-md">
+                 Paris needs heroes!
+            </div>
+            
+            <h1 class="font-fredoka text-5xl md:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl mb-6 leading-tight">
+                MIRACULOUS <br>
+                <span id="heroTitleSpan" class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-400 to-red-600">
+                    LADYBUG & CAT NOIR
+                </span>
+            </h1>
+
+            <p class="text-slate-300 text-lg md:text-2xl max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+                Únete a Marinette y Adrien en su misión secreta para proteger a París de los villanos de Hawk Moth. ¡Descubre sus poderes, kwamis y secretos!
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="triggerTransform('ladybug')" class="px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-fredoka text-xl font-bold rounded-2xl shadow-lg hover:shadow-red-600/50 hover:scale-105 transition-all flex items-center gap-3">
+                    <i class="fa-solid fa-bugs"></i> ¡Tikki, Puntos Fuera!
+                </button>
+                <button onclick="triggerTransform('catnoir')" class="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-800 hover:from-green-500 hover:to-emerald-700 text-white font-fredoka text-xl font-bold rounded-2xl shadow-lg hover:shadow-green-500/50 hover:scale-105 transition-all flex items-center gap-3">
+                    <i class="fa-solid fa-cat"></i> ¡Plagga, Las Garras!
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <!-- Section 1: Character Gallery -->
+        <section id="characters">
+            <div class="text-center mb-12">
+                <h2 class="font-fredoka text-4xl font-bold text-white mb-3">
+                    <i class="fa-solid fa-users text-red-500 mr-2"></i> Galería de Heroes y Villanos
+                </h2>
+                <p class="text-slate-400 text-lg">Haz clic en cualquier héroe para ver sus detalles de transformación</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="characterGrid">
+                <!-- Dynamic Character Cards Inject Here -->
+            </div>
+        </section>
+
+        <!-- Section 2: Kwami Selector & Transformation Power Finder -->
+        <section id="kwamis" class="glass-card rounded-3xl p-8 relative overflow-hidden border border-slate-700">
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400 bg-yellow-400/10 px-3 py-1 rounded-full border border-yellow-400/20">Caja de los Miraculous</span>
+                <h2 class="font-fredoka text-4xl font-bold text-white mt-2">Selector de Kwamis y Poderes</h2>
+                <p class="text-slate-400 mt-1">Selecciona un Kwami para conocer su frase de invocación y arma especial</p>
+            </div>
+
+            <!-- Kwami Icon Selector Grid -->
+            <div class="flex flex-wrap justify-center gap-4 mb-10" id="kwamiSelectorGrid">
+                <!-- Kwami buttons populated by JS -->
+            </div>
+
+            <!-- Kwami Details Interactive Display Area -->
+            <div id="kwamiDetailBox" class="bg-slate-900/80 rounded-2xl p-6 border border-slate-700 flex flex-col md:flex-row items-center gap-8 min-h-[220px] transition-all">
+                <div class="text-center md:text-left flex-grow">
+                    <p class="text-slate-500 italic">Haz clic en un Kwami arriba para revelar su magia...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Akuma Alert & Episode Guide -->
+        <section id="episodes">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="font-fredoka text-4xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-skull-crossbones text-purple-500"></i>
+                        Alerta Akuma & Guía de Episodios
+                    </h2>
+                    <p class="text-slate-400 mt-1">Explora los villanos akumatizados y episodios más emblemáticos</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+                    <button onclick="filterEpisodes('all')" class="ep-filter-btn active-filter px-4 py-2 rounded-lg font-fredoka text-sm transition-all" data-category="all">Todos</button>
+                    <button onclick="filterEpisodes('season1')" class="ep-filter-btn px-4 py-2 rounded-lg font-fredoka text-sm transition-all text-slate-400 hover:text-white" data-category="season1">Temporada 1</button>
+                    <button onclick="filterEpisodes('season2')" class="ep-filter-btn px-4 py-2 rounded-lg font-fredoka text-sm transition-all text-slate-400 hover:text-white" data-category="season2">Temporada 2+</button>
+                    <button onclick="filterEpisodes('villains')" class="ep-filter-btn px-4 py-2 rounded-lg font-fredoka text-sm transition-all text-slate-400 hover:text-white" data-category="villains">Villanos clave</button>
+                </div>
+            </div>
+
+            <!-- Episode Cards Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="episodesGrid">
+                <!-- Episode Cards Inject Here -->
+            </div>
+        </section>
+
+        <!-- Section 4: Miraculous Trivia Mini-Game -->
+        <section id="quiz" class="glass-card rounded-3xl p-8 border border-slate-700 relative">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-bold uppercase tracking-widest text-green-400 bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">Prueba tu Conocimiento</span>
+                    <h2 class="font-fredoka text-4xl font-bold text-white mt-2">Desafío Miraculous Trivia</h2>
+                    <p class="text-slate-400 mt-1">Demuestra que eres el fan #1 de Ladybug y Cat Noir</p>
+                </div>
+
+                <!-- Quiz Main Card -->
+                <div id="quizContainer" class="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 shadow-2xl">
+                    <!-- Progress Bar -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-xs text-slate-400 font-semibold mb-2">
+                            <span id="quizProgressText">Pregunta 1 de 5</span>
+                            <span id="quizScoreText">Puntos: 0</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="quizProgressBar" class="h-full bg-gradient-to-r from-red-500 to-green-500 w-1/5 transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h3 id="quizQuestion" class="font-fredoka text-2xl font-semibold text-white mb-6">
+                        Cargando pregunta...
+                    </h3>
+
+                    <!-- Options Grid -->
+                    <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <!-- Options Inject Here -->
+                    </div>
+
+                    <!-- Feedback Box -->
+                    <div id="quizFeedback" class="hidden p-4 rounded-xl text-center font-bold font-fredoka text-lg transition-all mb-4"></div>
+
+                    <!-- Next Button -->
+                    <div class="flex justify-end">
+                        <button id="quizNextBtn" onclick="nextQuestion()" class="hidden px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-fredoka rounded-xl font-bold transition-all shadow-lg">
+                            Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Dialog for Detailed Character View -->
+    <div id="characterModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full p-6 relative shadow-2xl transform transition-all scale-95 opacity-0" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full flex items-center justify-center font-bold text-xl transition-colors">
+                &times;
+            </button>
+            <div id="modalBody">
+                <!-- Modal details dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-500 py-8 text-center text-sm font-fredoka">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="text-slate-400">¡ Prodigiosa: Las Aventuras de Ladybug y Cat Noir Fan Portal !</p>
+            <p>Creado con <i class="fa-solid fa-heart text-red-500"></i> para miraculers de todo el mundo.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Character Dataset
+        const characters = [
+            {
+                id: 'ladybug',
+                name: 'Ladybug / Marinette',
+                alias: 'Marinette Dupain-Cheng',
+                kwami: 'Tikki',
+                miraculous: 'Aretes de Ladybug',
+                power: 'Lucky Charm (Amuleto Encantado) & Miraculous Ladybug',
+                weapon: 'Yo-yo mágico',
+                quote: '¡Tikki, puntos fuera!',
+                color: 'from-red-600 to-red-900',
+                borderColor: 'border-red-500',
+                icon: 'fa-bugs',
+                avatarBg: 'bg-red-600',
+                bio: 'Marinette es una estudiante torpe pero alegre y talentosa diseñadora en París. Como Ladybug, lidera al equipo de héroes con inteligencia y creatividad.'
+            },
+            {
+                id: 'catnoir',
+                name: 'Cat Noir / Adrien',
+                alias: 'Adrien Agreste',
+                kwami: 'Plagg',
+                miraculous: 'Anillo del Gato Negro',
+                power: 'Cataclysm (Cataclismo)',
+                weapon: 'Vara extensible',
+                quote: '¡Plagga, las garras!',
+                color: 'from-green-600 to-emerald-950',
+                borderColor: 'border-green-500',
+                icon: 'fa-cat',
+                avatarBg: 'bg-green-600',
+                bio: 'Adrien es un famoso modelo adolescente. Al transformarse en Cat Noir, adquiere total libertad para coquetear, bromear y proteger París junto a Ladybug.'
+            },
+            {
+                id: 'renarouge',
+                name: 'Rena Rouge / Alya',
+                alias: 'Alya Césaire',
+                kwami: 'Trixx',
+                miraculous: 'Collar del Zorro',
+                power: 'Mirage (Espejismo)',
+                weapon: 'Flauta mágica',
+                quote: '¡Trixx, fantasma fuera!',
+                color: 'from-orange-600 to-amber-900',
+                borderColor: 'border-orange-500',
+                icon: 'fa-mask-face',
+                avatarBg: 'bg-orange-600',
+                bio: 'Alya es la mejor amiga de Marinette y creadora del Ladyblog. Con el Miraculous del zorro, crea ilusiones ópticas hyper-realistas.'
+            },
+            {
+                id: 'carapace',
+                name: 'Carapace / Nino',
+                alias: 'Nino Lahiffe',
+                kwami: 'Wayzz',
+                miraculous: 'Pulsera de la Tortuga',
+                power: 'Protection (Caparazón)',
+                weapon: 'Escudo defensivo',
+                quote: '¡Wayzz, la hora del caparazón!',
+                color: 'from-emerald-600 to-teal-950',
+                borderColor: 'border-emerald-500',
+                icon: 'fa-shield-halved',
+                avatarBg: 'bg-emerald-600',
+                bio: 'Nino es un talentoso DJ y el novio de Alya. Como Carapace, provee campos de fuerza impenetrables para resguardar al equipo.'
+            },
+            {
+                id: 'queenbee',
+                name: 'Queen Bee / Chloë',
+                alias: 'Chloë Bourgeois',
+                kwami: 'Pollen',
+                miraculous: 'Peineta de la Abeja',
+                power: 'Venom (Veneno - Inmovilización)',
+                weapon: 'Trompo mágico',
+                quote: '¡Pollen, a zumbar!',
+                color: 'from-yellow-500 to-amber-700',
+                borderColor: 'border-yellow-400',
+                icon: 'fa-bolt',
+                avatarBg: 'bg-yellow-500',
+                bio: 'Hija mimada del alcalde de París. Aunque presuntuosa, demostró gran valentía al usar el poder de inmovilizar a sus rivales.'
+            },
+            {
+                id: 'hawkmoth',
+                name: 'Hawk Moth / Gabriel',
+                alias: 'Gabriel Agreste',
+                kwami: 'Nooroo',
+                miraculous: 'Broche de la Mariposa',
+                power: 'Akumatización (Concesión de poderes)',
+                weapon: 'Bastón con espada',
+                quote: '¡Vuela, mi pequeño Akuma, y oscurece su corazón!',
+                color: 'from-purple-800 to-slate-950',
+                borderColor: 'border-purple-500',
+                icon: 'fa-skull',
+                avatarBg: 'bg-purple-700',
+                bio: 'El principal antagonista. Gabriel busca desesperadamente obtener los Miraculous de Ladybug y Cat Noir para pedir un deseo y salvar a su esposa Emilie.'
+            }
+        ];
+
+        // Kwami Dataset
+        const kwamis = [
+            {
+                id: 'tikki',
+                name: 'Tikki',
+                animal: 'Mariquita',
+                concept: 'Creación',
+                phrase: '¡Tikki, Puntos Fuera!',
+                dephrase: '¡Tikki, Puntos Fuere!',
+                favoriteFood: 'Galletas de chispas de chocolate',
+                power: 'Lucky Charm (Invoca un objeto clave único)',
+                color: 'bg-red-600',
+                textColor: 'text-red-400',
+                icon: 'fa-bugs'
+            },
+            {
+                id: 'plagg',
+                name: 'Plagg',
+                animal: 'Gato Negro',
+                concept: 'Destrucción',
+                phrase: '¡Plagga, Las Garras!',
+                dephrase: '¡Plagga, Fuera Garras!',
+                favoriteFood: 'Queso Camembert apestoso',
+                power: 'Cataclysm (Destruye cualquier objeto que toca)',
+                color: 'bg-green-600',
+                textColor: 'text-green-400',
+                icon: 'fa-cat'
+            },
+            {
+                id: 'trixx',
+                name: 'Trixx',
+                animal: 'Zorro',
+                concept: 'Ilusión',
+                phrase: '¡Trixx, Fantasma Fuera!',
+                favoriteFood: 'Uvas y frutas frescas',
+                power: 'Mirage (Crea ilusiones tangibles a distancia)',
+                color: 'bg-orange-500',
+                textColor: 'text-orange-400',
+                icon: 'fa-ghost'
+            },
+            {
+                id: 'wayzz',
+                name: 'Wayzz',
+                animal: 'Tortuga',
+                concept: 'Protección',
+                phrase: '¡Wayzz, Hora del Caparazón!',
+                favoriteFood: 'Hojas de té',
+                power: 'Shelter (Genera una barrera de energía indestructible)',
+                color: 'bg-emerald-600',
+                textColor: 'text-emerald-400',
+                icon: 'fa-shield'
+            },
+            {
+                id: 'pollen',
+                name: 'Pollen',
+                animal: 'Abeja',
+                concept: 'Acción / Inmovilización',
+                phrase: '¡Pollen, A Zumbar!',
+                favoriteFood: 'Miel pura',
+                power: 'Venom (Paraliza completamente al objetivo al tacto)',
+                color: 'bg-yellow-500',
+                textColor: 'text-yellow-400',
+                icon: 'fa-bolt'
+            },
+            {
+                id: 'nooroo',
+                name: 'Nooroo',
+                animal: 'Mariposa',
+                concept: 'Transmisión',
+                phrase: '¡Nooroo, Alas Oscuras!',
+                favoriteFood: 'Néctar de flores',
+                power: 'Akumatización (Otorga superpoderes a personas con emociones intensas)',
+                color: 'bg-purple-600',
+                textColor: 'text-purple-400',
+                icon: 'fa-feather'
+            }
+        ];
+
+        // Episode Guide Dataset
+        const episodes = [
+            {
+                title: 'Burbujeo (The Bubbler)',
+                villain: 'Nino Lahiffe',
+                season: 'season1',
+                category: 'villains',
+                seasonText: 'Temporada 1 - Ep 1',
+                summary: 'Nino es akumatizado porque el padre de Adrien no le permite hacerle una fiesta de cumpleaños a su hijo. Encierra a los adultos en burbujas gigantes.',
+                badgeColor: 'bg-blue-600'
+            },
+            {
+                title: 'Ilustrador (Evillustrator)',
+                villain: 'Nathaniel Kurtzberg',
+                season: 'season1',
+                category: 'season1',
+                seasonText: 'Temporada 1 - Ep 2',
+                summary: 'Nathaniel es akumatizado tras ser humillado por Chloë por sus dibujos de Marinette. Todo lo que dibuja cobra vida.',
+                badgeColor: 'bg-pink-600'
+            },
+            {
+                title: 'Volpina',
+                villain: 'Lila Rossi',
+                season: 'season1',
+                category: 'villains',
+                seasonText: 'Temporada 1 - Ep 26',
+                summary: 'Lila miente sobre ser una superheroína descendiente de la zorra y poseer un Miraculous. Ladybug la expone y Lila termina convertida en Volpina.',
+                badgeColor: 'bg-orange-600'
+            },
+            {
+                title: 'El Día de los Héroes',
+                villain: 'Catalyst & Akuma Army',
+                season: 'season2',
+                category: 'season2',
+                seasonText: 'Temporada 2 - Especial',
+                summary: 'Hawk Moth pone en marcha su plan más ambicioso, potenciando a Nathalie como Catalyst para akumatizar a cientos de parisinos simultáneamente.',
+                badgeColor: 'bg-red-700'
+            },
+            {
+                title: 'Chat Blanc',
+                villain: 'Cat Noir Akumatizado',
+                season: 'season2',
+                category: 'villains',
+                seasonText: 'Temporada 3 - Ep 22',
+                summary: 'En un futuro alternativo trágico, Cat Noir descubre la identidad de Ladybug y termina siendo akumatizado con un poder de destrucción catastrófico.',
+                badgeColor: 'bg-slate-300 text-slate-900'
+            },
+            {
+                title: 'Monarca (Monarch)',
+                villain: 'Gabriel Agreste (Poderes múltiples)',
+                season: 'season2',
+                category: 'season2',
+                seasonText: 'Temporada 5',
+                summary: 'Gabriel roba casi todos los Miraculous de la caja y se convierte en Monarca, infundiendo anillos con múltiples kwamis a la vez.',
+                badgeColor: 'bg-purple-700'
+            }
+        ];
+
+        // Quiz Questions Dataset
+        const quizData = [
+            {
+                question: '¿Cuál es la comida favorita de Plagg para recargar su energía?',
+                options: ['Croissants parisinos', 'Queso Camembert', 'Galletas de chocolate', 'Miel pura'],
+                correct: 1
+            },
+            {
+                question: '¿Qué objeto utiliza Ladybug para almacenar y purificar a los Akumas?',
+                options: ['Su teléfono', 'Su Yo-yo mágico', 'Una caja secreta', 'Sus aretes'],
+                correct: 1
+            },
+            {
+                question: '¿Cómo se llama la mejor amiga de Marinette creadora del Ladyblog?',
+                options: ['Chloë', 'Lila', 'Alya', 'Juleka'],
+                correct: 2
+            },
+            {
+                question: '¿Cuál es el concepto abstracto encarnado por Tikki?',
+                options: ['Destrucción', 'Protección', 'Creación', 'Ilusión'],
+                correct: 2
+            },
+            {
+                question: '¿Qué frase pronuncias para invocar el poder destructivo de Cat Noir?',
+                options: ['¡Cataclismo!', '¡Lucky Charm!', '¡Espejismo!', '¡Caparazón!'],
+                correct: 0
+            }
+        ];
+
+        // App State Variables
+        let currentTheme = 'ladybug'; // 'ladybug' or 'catnoir'
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        // Initialize App on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCharacters();
+            renderKwamis();
+            renderEpisodes('all');
+            initQuiz();
+            selectKwami('tikki'); // Default selection
+        });
+
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.getElementById('appBody');
+            const header = document.getElementById('heroHeader');
+            const btnText = document.getElementById('themeBtnText');
+            const heroSpan = document.getElementById('heroTitleSpan');
+
+            if (currentTheme === 'ladybug') {
+                currentTheme = 'catnoir';
+                header.classList.remove('polka-dot-bg');
+                header.classList.add('cat-noir-bg');
+                btnText.innerHTML = '<i class="fa-solid fa-bugs"></i> Modo Ladybug';
+                heroSpan.className = 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-300 to-green-600';
+                triggerEffect('catnoir');
+            } else {
+                currentTheme = 'ladybug';
+                header.classList.remove('cat-noir-bg');
+                header.classList.add('polka-dot-bg');
+                btnText.innerHTML = '<i class="fa-solid fa-shield-cat"></i> Modo Cat Noir';
+                heroSpan.className = 'text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-400 to-red-600';
+                triggerEffect('ladybug');
+            }
+        }
+
+        // Render Character Cards
+        function renderCharacters() {
+            const grid = document.getElementById('characterGrid');
+            grid.innerHTML = characters.map(char => `
+                <div onclick="openModal('${char.id}')" class="glass-card rounded-2xl p-5 cursor-pointer hover:-translate-y-2 hover:shadow-xl border ${char.borderColor} transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-28 h-28 bg-white/5 rounded-full group-hover:scale-150 transition-transform"></div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 ${char.avatarBg} rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg border border-white/20">
+                            <i class="fa-solid ${char.icon}"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-fredoka text-xl font-bold text-white group-hover:text-red-400 transition-colors">${char.name}</h3>
+                            <p class="text-xs text-slate-400 font-semibold">${char.alias}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm text-slate-300">
+                        <p><strong class="text-slate-400">Kwami:</strong> <span class="text-white">${char.kwami}</span></p>
+                        <p><strong class="text-slate-400">Poder:</strong> <span class="text-red-300">${char.power}</span></p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
+                        <span>Ver detalles</span>
+                        <i class="fa-solid fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Kwami Buttons
+        function renderKwamis() {
+            const grid = document.getElementById('kwamiSelectorGrid');
+            grid.innerHTML = kwamis.map(k => `
+                <button onclick="selectKwami('${k.id}')" class="px-5 py-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-md">
+                    <div class="w-8 h-8 ${k.color} rounded-full flex items-center justify-center text-white text-sm">
+                        <i class="fa-solid ${k.icon}"></i>
+                    </div>
+                    <span class="font-fredoka font-bold text-white text-base">${k.name}</span>
+                </button>
+            `).join('');
+        }
+
+        // Select and Display Kwami Details
+        function selectKwami(id) {
+            const kwami = kwamis.find(k => k.id === id);
+            if (!kwami) return;
+
+            const detailBox = document.getElementById('kwamiDetailBox');
+            detailBox.innerHTML = `
+                <div class="w-24 h-24 ${kwami.color} rounded-3xl flex items-center justify-center text-white text-5xl shadow-2xl border-2 border-white/30 shrink-0 animate-bounce">
+                    <i class="fa-solid ${kwami.icon}"></i>
+                </div>
+                <div class="space-y-2 text-center md:text-left flex-grow">
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                        <h3 class="font-fredoka text-3xl font-extrabold text-white">${kwami.name}</h3>
+                        <span class="text-xs font-bold px-3 py-1 bg-slate-800 text-slate-300 rounded-full border border-slate-700">
+                            Concepto: ${kwami.concept}
+                        </span>
+                    </div>
+                    <p class="text-lg font-bold ${kwami.textColor} italic">"${kwami.phrase}"</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-300 pt-2 border-t border-slate-800">
+                        <p><strong>Comida favorita:</strong> ${kwami.favoriteFood}</p>
+                        <p><strong>Habilidad Mágica:</strong> ${kwami.power}</p>
+                    </div>
+                </div>
+            `;
+            triggerEffect(id === 'plagg' ? 'catnoir' : 'ladybug');
+        }
+
+        // Render Episode Cards
+        function renderEpisodes(category) {
+            const grid = document.getElementById('episodesGrid');
+            const filtered = category === 'all' 
+                ? episodes 
+                : episodes.filter(e => e.category === category || e.season === category);
+
+            grid.innerHTML = filtered.map(ep => `
+                <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between hover:border-slate-600 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 ${ep.badgeColor} text-white rounded-lg">${ep.seasonText}</span>
+                            <span class="text-xs text-purple-400 font-semibold"><i class="fa-solid fa-mask"></i> Villano</span>
+                        </div>
+                        <h3 class="font-fredoka text-xl font-bold text-white mb-1">${ep.title}</h3>
+                        <p class="text-xs text-slate-400 font-bold mb-3">Víctima: ${ep.villain}</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">${ep.summary}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Episodes Navigation
+        function filterEpisodes(cat) {
+            document.querySelectorAll('.ep-filter-btn').forEach(btn => {
+                if(btn.dataset.category === cat) {
+                    btn.classList.add('bg-red-600', 'text-white');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    btn.classList.remove('bg-red-600', 'text-white');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+            renderEpisodes(cat);
+        }
+
+        // Modal Character View
+        function openModal(id) {
+            const char = characters.find(c => c.id === id);
+            if (!char) return;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 ${char.avatarBg} rounded-2xl flex items-center justify-center text-white text-4xl mx-auto mb-3 shadow-xl border border-white/20">
+                        <i class="fa-solid ${char.icon}"></i>
+                    </div>
+                    <h2 class="font-fredoka text-3xl font-extrabold text-white">${char.name}</h2>
+                    <p class="text-sm text-slate-400 font-semibold">${char.alias}</p>
+                </div>
+
+                <div class="space-y-4 text-slate-300 text-sm">
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/60">
+                        <p class="italic text-slate-200 text-center font-bold font-fredoka text-base">"${char.quote}"</p>
+                    </div>
+                    <p class="leading-relaxed text-slate-300">${char.bio}</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-800">
+                            <span class="text-xs text-slate-500 font-bold uppercase block">Kwami</span>
+                            <span class="font-bold text-white">${char.kwami}</span>
+                        </div>
+                        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-800">
+                            <span class="text-xs text-slate-500 font-bold uppercase block">Miraculous</span>
+                            <span class="font-bold text-white">${char.miraculous}</span>
+                        </div>
+                        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-800 col-span-2">
+                            <span class="text-xs text-slate-500 font-bold uppercase block">Poder Especial & Arma</span>
+                            <span class="font-bold text-red-400">${char.power} (${char.weapon})</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const modal = document.getElementById('characterModal');
+            const modalContent = document.getElementById('modalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('characterModal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Interactive Quiz Logic
+        function initQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quizQuestion').innerText = q.question;
+            document.getElementById('quizProgressText').innerText = `Pregunta ${currentQuizIndex + 1} de ${quizData.length}`;
+            document.getElementById('quizScoreText').innerText = `Puntos: ${quizScore}`;
+            document.getElementById('quizProgressBar').style.width = `${((currentQuizIndex + 1) / quizData.length) * 100}%`;
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = q.options.map((opt, idx) => `
+                <button onclick="checkAnswer(${idx})" class="quiz-opt-btn w-full p-4 text-left rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition-all border border-slate-700 hover:border-slate-500 flex items-center justify-between">
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-500"></i>
+                </button>
+            `).join('');
+
+            document.getElementById('quizFeedback').classList.add('hidden');
+            document.getElementById('quizNextBtn').classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIdx) {
+            const q = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quizFeedback');
+            const buttons = document.querySelectorAll('.quiz-opt-btn');
+
+            // Disable further button clicks
+            buttons.forEach(btn => btn.onclick = null);
+
+            if (selectedIdx === q.correct) {
+                quizScore += 20;
+                feedback.className = 'p-4 rounded-xl text-center font-bold font-fredoka text-lg bg-green-500/20 text-green-300 border border-green-500/40 block';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Correcto! ¡Eres todo un héroe!';
+                buttons[selectedIdx].classList.add('bg-green-600/30', 'border-green-500');
+                triggerEffect('ladybug');
+            } else {
+                feedback.className = 'p-4 rounded-xl text-center font-bold font-fredoka text-lg bg-red-500/20 text-red-300 border border-red-500/40 block';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> ¡Incorrecto! La respuesta correcta era: ${q.options[q.correct]}`;
+                buttons[selectedIdx].classList.add('bg-red-600/30', 'border-red-500');
+                buttons[q.correct].classList.add('bg-green-600/30', 'border-green-500');
+            }
+
+            document.getElementById('quizScoreText').innerText = `Puntos: ${quizScore}`;
+            document.getElementById('quizNextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizData.length) {
+                showQuestion();
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = `
+                <div class="text-center py-8 space-y-4">
+                    <div class="w-20 h-20 bg-gradient-to-tr from-yellow-400 to-red-500 rounded-full flex items-center justify-center text-slate-900 text-4xl mx-auto shadow-xl animate-bounce">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="font-fredoka text-3xl font-bold text-white">¡Trivia Completada!</h3>
+                    <p class="text-xl text-slate-300">Obtuviste <span class="text-yellow-400 font-extrabold text-2xl">${quizScore}</span> de 100 puntos.</p>
+                    <p class="text-slate-400 text-sm max-w-md mx-auto">
+                        ${quizScore >= 80 
+                            ? '¡Increíble! Ladybug y Cat Noir estarían orgullosos de tenerte en el equipo.' 
+                            : '¡Buen intento! Vuelve a ver algunos episodios y vuelve a intentarlo.'}
+                    </p>
+                    <button onclick="location.reload()" class="mt-4 px-8 py-3 bg-red-600 hover:bg-red-500 text-white font-fredoka font-bold rounded-xl shadow-lg transition-all">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Jugar de nuevo
+                    </button>
+                </div>
+            `;
+            triggerEffect('ladybug');
+        }
+
+        // Magic Visual Burst Effects Trigger
+        function triggerEffect(type) {
+            const container = document.getElementById('fxContainer');
+            const burst = document.createElement('div');
+            
+            const color = type === 'ladybug' ? 'rgba(230,0,38,0.5)' : 'rgba(57,255,20,0.5)';
+            
+            burst.className = 'fx-burst';
+            burst.style.left = '50%';
+            burst.style.top = '50%';
+            burst.style.width = '300px';
+            burst.style.height = '300px';
+            burst.style.marginLeft = '-150px';
+            burst.style.marginTop = '-150px';
+            burst.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+
+            container.appendChild(burst);
+            setTimeout(() => burst.remove(), 800);
+        }
+
+        // Transformation Special Effect
+        function triggerTransform(hero) {
+            triggerEffect(hero);
+            const msg = hero === 'ladybug' ? '¡LUCKY CHARM ACTIVADO!' : '¡CATACLISMO ACTIVADO!';
+            
+            const alertBox = document.createElement('div');
+            alertBox.className = `fixed top-20 left-1/2 transform -translate-x-1/2 z-50 px-8 py-4 rounded-2xl font-fredoka text-xl font-bold text-white shadow-2xl transition-all duration-500 ${hero === 'ladybug' ? 'bg-red-600 border-2 border-white' : 'bg-green-600 border-2 border-black'}`;
+            alertBox.innerHTML = `<i class="fa-solid ${hero === 'ladybug' ? 'fa-wand-magic-sparkles' : 'fa-bolt'} mr-2"></i> ${msg}`;
+            
+            document.body.appendChild(alertBox);
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500);
+            }, 1800);
+        }
+    </script>
+</body>
+</html>
